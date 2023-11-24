@@ -1,5 +1,3 @@
-
-
 <div class="ion-page" id="main-content">
   <ion-header>
     <ion-toolbar color="mycolor">
@@ -10,9 +8,27 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
-   
+  <ion-content class="ion-padding">
+
+    <div class="centrar">
+      <h1>
+        <i>
+          Opciones de dietas
+        </i>
+      </h1>
+    </div>
+    <div class="centrar">
+      <ion-button [routerLink]="['/resistencia']">Entrenamiento de resistencia</ion-button>
+      <ion-button [routerLink]="['/cardiovascular']">Entrenamiento cardiovascular</ion-button>
+      <ion-button [routerLink]="['/intensidad']">Entrenamiento de alta intensidad</ion-button>
+      <ion-button [routerLink]="['/perdida-peso']">Pérdida de peso</ion-button>
+    </div>
+    
+
+
   </ion-content>
- 
+  
+
+
 
 </div>

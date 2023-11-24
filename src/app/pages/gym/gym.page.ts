@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GymFirestoreService } from 'src/app/services/gym-firestore.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-gym',
@@ -15,13 +16,16 @@ export class GymPage implements OnInit {
   showCreateForm: boolean = false;
   showCreateButton: boolean = true;
 
-  constructor(private gymService: GymFirestoreService) {}
+  constructor(
+    private gymService: GymFirestoreService,
+    private alertController: AlertController
+  ) {}
 
   ngOnInit() {
     this.getGyms();
   }
 
-  getGyms() {
+  async getGyms() {
     this.gymService.getGyms().subscribe((gyms: any[]) => {
       this.gyms = gyms;
     });
@@ -34,48 +38,64 @@ export class GymPage implements OnInit {
     this.showCreateButton = false; // Ocultar el botón al seleccionar un gimnasio
   }
 
-  updateGym() {
+  async updateGym() {
     if (this.selectedGym) {
-      this.gymService.updateGym(this.selectedGym.id, this.selectedGym)
-        .then(() => {
-          console.log('Gimnasio actualizado exitosamente');
-          this.showDetail = false;
-          this.getGyms();
-        })
-        .catch(error => {
-          console.error('Error al actualizar el gimnasio', error);
-        });
+      try {
+        await this.gymService.updateGym(this.selectedGym.id, this.selectedGym);
+        this.showDetail = false;
+        this.getGyms();
+        this.presentAlert('Éxito', 'Gimnasio actualizado exitosamente');
+      } catch (error) {
+        console.error('Error al actualizar el gimnasio', error);
+        this.presentAlert('Error', 'Hubo un problema al actualizar el gimnasio');
+      }
     }
   }
 
-  deleteGym(gymId: string) {
-    if (confirm('¿Estás seguro de eliminar este gimnasio?')) {
-      this.gymService.deleteGym(gymId)
-        .then(() => {
-          console.log('Gimnasio eliminado exitosamente');
-          this.showDetail = false;
-          this.getGyms();
-        })
-        .catch(error => {
-          console.error('Error al eliminar el gimnasio', error);
-        });
-    }
+  async deleteGym(gymId: string) {
+    const confirmAlert = await this.alertController.create({
+      header: 'Confirmar',
+      message: '¿Estás seguro de eliminar este gimnasio?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Eliminar',
+          handler: async () => {
+            try {
+              await this.gymService.deleteGym(gymId);
+              this.showDetail = false;
+              this.getGyms();
+              this.presentAlert('Éxito', 'Gimnasio eliminado exitosamente');
+            } catch (error) {
+              console.error('Error al eliminar el gimnasio', error);
+              this.presentAlert('Error', 'Hubo un problema al eliminar el gimnasio');
+            }
+          }
+        }
+      ]
+    });
+
+    await confirmAlert.present();
   }
 
-  createGym() {
+  async createGym() {
     if (this.newGym.nombre && this.newGym.direccion && this.newGym.horario && this.newGym.latitud && this.newGym.longitud) {
-      this.gymService.createGym(this.newGym)
-        .then(() => {
-          console.log('Gimnasio creado exitosamente');
-          this.newGym = {};
-          this.getGyms();
-          this.showCreateButton = true; // Mostrar el botón después de crear el gimnasio
-        })
-        .catch(error => {
-          console.error('Error al crear el gimnasio', error);
-        });
+      try {
+        await this.gymService.createGym(this.newGym);
+        this.newGym = {};
+        this.getGyms();
+        this.showCreateButton = true; // Mostrar el botón después de crear el gimnasio
+        this.presentAlert('Éxito', 'Gimnasio creado exitosamente');
+      } catch (error) {
+        console.error('Error al crear el gimnasio', error);
+        this.presentAlert('Error', 'Hubo un problema al crear el gimnasio');
+      }
     } else {
       console.error('Todos los campos son requeridos');
+      this.presentAlert('Error', 'Todos los campos son requeridos');
     }
   }
 
@@ -83,5 +103,15 @@ export class GymPage implements OnInit {
     this.showCreateForm = true;
     this.showDetail = false;
     this.showCreateButton = false; // Ocultar el botón al mostrar el formulario de creación
+  }
+
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header,
+      message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 }

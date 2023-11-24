@@ -11,6 +11,10 @@ export class FirebaseService {
 
   private inactivityTimer: any;
   private inactivityDuration: number = 600000; 
+  agregarDieta: any;
+  obtenerDietas: any;
+  actualizarDieta: any;
+  eliminarDieta: any;
 
 
   constructor(private auth: AngularFireAuth,

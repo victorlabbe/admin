@@ -36,12 +36,6 @@ export class DietasPage implements OnInit {
   ngOnInit() {
   }
  
-
-
-
-
-
-
   signOut() {
     // Eliminar el token de autenticación de localStorage
     localStorage.removeItem('userToken');

@@ -36,7 +36,23 @@ const routes: Routes = [
   {
     path: 'gym',
     loadChildren: () => import('./pages/gym/gym.module').then( m => m.GymPageModule)
+  },  {
+    path: 'resistencia',
+    loadChildren: () => import('./pages/resistencia/resistencia.module').then( m => m.ResistenciaPageModule)
   },
+  {
+    path: 'cardiovascular',
+    loadChildren: () => import('./pages/cardiovascular/cardiovascular.module').then( m => m.CardiovascularPageModule)
+  },
+  {
+    path: 'intensidad',
+    loadChildren: () => import('./pages/intensidad/intensidad.module').then( m => m.IntensidadPageModule)
+  },
+  {
+    path: 'perdida-peso',
+    loadChildren: () => import('./pages/perdida-peso/perdida-peso.module').then( m => m.PerdidaPesoPageModule)
+  },
+
 
 
 ];
