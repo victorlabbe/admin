@@ -1,4 +1,4 @@
-<ion-toolbar  class="text-center" color="black">
+<ion-toolbar class="text-center" color="black">
   <ion-buttons slot="start">
     <ion-back-button class="title" defaultHref="/main"></ion-back-button>
   </ion-buttons>
@@ -6,9 +6,54 @@
 </ion-toolbar>
 
 <ion-content class="ion-padding">
- 
+  <!-- Lista de usuarios -->
+  <ion-list lines="full">
+    <ion-item *ngFor="let user of users" (click)="onSelectUser(user)" [class.selected]="selectedUser === user">
+      <ion-label>{{ user.name }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <!-- Detalles del usuario seleccionado -->
+  <ion-card *ngIf="selectedUser" class="user-details">
+    <ion-card-header>
+      <ion-card-title>Detalles del usuario seleccionado</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+
+      <ion-item>
+        <ion-label>Nombre:</ion-label>
+        <ion-input [(ngModel)]="selectedUser.name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Nombre:</ion-label>
+        <ion-input [(ngModel)]="selectedUser.lastName"></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label>Nombre:</ion-label>
+        <ion-input [(ngModel)]="selectedUser.numContact"></ion-input>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label>Email:</ion-label>
+        <ion-input [(ngModel)]="selectedUser.email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Edad:</ion-label>
+        <ion-input [(ngModel)]="selectedUser.age"></ion-input>
+      </ion-item>
+
+      <!-- Agrega más campos según la estructura de tu usuario -->
+
+      <ion-button expand="full" (click)="updateUser()">Guardar cambios</ion-button>
+      <ion-button expand="full" color="danger" (click)="deleteUserFromFirebase()">Eliminar usuario</ion-button>
+    </ion-card-content>
+  </ion-card>
 
 
 
- 
+
 </ion-content>

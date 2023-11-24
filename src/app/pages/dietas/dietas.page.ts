@@ -1,6 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ApiService } from 'src/app/services/api.service';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -26,53 +25,21 @@ export class DietasPage implements OnInit {
   combinedData: any = { "Entrenamiento de resistencia": {}, "Entrenamiento cardiovascular": {}, "Entrenamiento de alta intensidad (HIIT, CrossFit)": {}, "Pérdida de peso": {} };
 
 
-  constructor(private http: HttpClient) { }
-  firebaseServ = inject(FirebaseService);
-  router = inject(Router);
-  api = inject(ApiService);
+  constructor(private http: HttpClient,
+              private firebaseServ : FirebaseService,
+              private router : Router) { }
+
+
 
 
 
   ngOnInit() {
-    // Espera a que se carguen los datos de todas las colecciones
-    forkJoin([
-      this.api.getDietCard(),
-      this.api.getDietHigh(),
-      this.api.getDietRes(),
-      this.api.getDietWeight()
-    ]).subscribe(([dietCard, dietHigh, dietRes, dietWeight]) => {
-      this.dataDietCard = dietCard;
-      this.dataDietHigh = dietHigh;
-      this.dataDietRes = dietRes;
-      this.dataDietWeight = dietWeight;
-  
-      // Combina los datos en combinedData
-      this.dietasRes["Entrenamiento de resistencia"] = this.dataDietRes.diet_resistencias;
-      this.dietasRes["Entrenamiento cardiovascular"] = this.dataDietCard.diet_resistencias;
-      this.dietasRes["Entrenamiento de alta intensidad (HIIT, CrossFit)"] = this.dataDietHigh.diet_resistencias;
-      this.dietasRes["Pérdida de peso"] = this.dataDietWeight.diet_resistencias;
-      console.log(this.dietasRes)
-    });
-}
-
-  seleccionarDieta() {
-    this.dietaSeleccionada = this.dietasRes[this.seleccionOpcion];
-    console.log(this.dietaSeleccionada);
   }
  
 
 
 
 
-
-  userRole: string = 'usuario'; // Simula el rol del usuario (puedes obtenerlo de tu sistema de autenticación)
-  
-
-  // Función para verificar si el usuario tiene el rol "admin"
-  isUserAdmin(): boolean {
-    return this.userRole === 'admin';
-  }
-  
 
 
   signOut() {
@@ -86,11 +53,6 @@ export class DietasPage implements OnInit {
     this.router.navigate(['/']);
   }
 
-  openMain() {
-    // Abre la página de "Ubicaciones" con un pequeño retraso
-    setTimeout(() => {
-      this.router.navigate(['/main']);
-    }, 400); // 300 milisegundos (ajusta este valor según tus necesidades)
-  }
+
 
 }

@@ -1,10 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { FirebaseService } from 'src/app/services/firebase.service';
-import { UtilsService } from 'src/app/services/utils.service';
 import { Router } from '@angular/router';
-import { ApiService } from 'src/app/services/api.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { DataStorageService } from 'src/app/services/data-storage.service';
+import { UserFirestoreService } from 'src/app/services/user-firestore.service';
 
 
 
@@ -20,27 +18,28 @@ export class MainPage implements OnInit {
 
   
   constructor(private afAuth: AngularFireAuth,
-              private firebaseServ:FirebaseService,
-              private utilsServ: UtilsService,
               private router: Router,
-              private api: ApiService,
-              private dataStorageService: DataStorageService){}
+              private dataStorageService: DataStorageService,
+              private userFirestore : UserFirestoreService ){}
 
   marcador: any[];
   
 
 
 
-  ngOnInit() {
-    this.api.getGym().subscribe((response) => {
-      this.data = response;
-      this.marcador = this.data;
-      this.dataStorageService.setDataGym(this.marcador)
-      const dataGym = this.dataStorageService.getDataGym()
-      console.log(dataGym)
-    });
-
+  ngOnInit(): void {
+    this.fetchUsers();
+  }
   
+  fetchUsers() {
+      this.userFirestore .getUsers().subscribe(
+        users => {
+          console.log('Usuarios obtenidos:', users);
+        },
+        error => {
+          console.error('Error al obtener usuarios:', error);
+        }
+      );
   }
 
 

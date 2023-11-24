@@ -8,9 +8,94 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
-   
+  <ion-content class="ion-padding">
+    <!-- Lista de gimnasios -->
+    <ion-list lines="full">
+      <ion-item *ngFor="let gym of gyms" (click)="selectGym(gym)" [class.selected]="selectedGym === gym">
+        <ion-label>{{ gym.nombre }}</ion-label>
+      </ion-item>
+    </ion-list>
+  
+    <!-- Detalles del gimnasio seleccionado -->
+    <ion-card *ngIf="showDetail" class="gym-details">
+      <ion-card-header>
+        <ion-card-title>Detalles del gimnasio seleccionado</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+  
+        <ion-item>
+          <ion-label position="floating">Nombre:</ion-label>
+          <ion-input [(ngModel)]="selectedGym.nombre"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Dirección:</ion-label>
+          <ion-input [(ngModel)]="selectedGym.direccion"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Horario:</ion-label>
+          <ion-input [(ngModel)]="selectedGym.horario"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Latitud:</ion-label>
+          <ion-input type="number" [(ngModel)]="selectedGym.latitud"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Longitud:</ion-label>
+          <ion-input type="number" [(ngModel)]="selectedGym.longitud"></ion-input>
+        </ion-item>
+  
+        <!-- Agrega más campos según la estructura de tu gimnasio -->
+  
+        <ion-button expand="full" (click)="updateGym()">Guardar cambios</ion-button>
+        <ion-button expand="full" color="danger" (click)="deleteGym(selectedGym.id)">Eliminar gimnasio</ion-button>
+      </ion-card-content>
+    </ion-card>
+  
+    <!-- Formulario para crear un nuevo gimnasio -->
+    <ion-card class="create-gym-form" *ngIf="showCreateForm">
+      <ion-card-header>
+        <ion-card-title>Crear nuevo gimnasio</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+  
+        <ion-item>
+          <ion-label position="floating">Nombre:</ion-label>
+          <ion-input [(ngModel)]="newGym.nombre"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Dirección:</ion-label>
+          <ion-input [(ngModel)]="newGym.direccion"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Horario:</ion-label>
+          <ion-input [(ngModel)]="newGym.horario"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Latitud:</ion-label>
+          <ion-input type="number" [(ngModel)]="newGym.latitud"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Longitud:</ion-label>
+          <ion-input type="number" [(ngModel)]="newGym.longitud"></ion-input>
+        </ion-item>
+  
+        <!-- Agrega más campos según la estructura de tu gimnasio -->
+  
+        <ion-button expand="full" (click)="createGym()">Crear gimnasio</ion-button>
+      </ion-card-content>
+    </ion-card>
+    <ion-button expand="full" (click)="showCreateGymForm()">Crear nuevo gimnasio</ion-button>
   </ion-content>
- 
+  
+
+
 
 </div>

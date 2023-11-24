@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { ToastController } from '@ionic/angular';
-import { ApiService } from 'src/app/services/api.service';
-import { AngularFireStorage } from '@angular/fire/compat/storage'; 
+import { UserFirestoreService } from 'src/app/services/user-firestore.service';
 
 @Component({
   selector: 'app-perfil',
@@ -11,85 +8,51 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 })
 export class PerfilPage implements OnInit {
 
-  userData: any;
-  apiUserData: any;
-  userEmail: string;
-  data: any;
-  datos: any;
+  users: any[] = []; // Lista de usuarios obtenidos
+  selectedUser: any; // Usuario seleccionado
+
+  constructor(private userFirestoreService: UserFirestoreService) { }
+
+  ngOnInit(): void {
+    this.getUsers();
+  }
+
+  getUsers(): void {
+    this.userFirestoreService.getUsers().subscribe(users => {
+      this.users = users;
+    });
+  }
+
+  onSelectUser(user: any): void {
+    this.selectedUser = user;
+    // Aquí podrías hacer algo con el usuario seleccionado, como mostrar los detalles, editar o eliminar.
+  }
+
+  updateUser(): void {
+    if (this.selectedUser) {
+      // Lógica para actualizar el usuario seleccionado
+      this.userFirestoreService.updateUser(this.selectedUser.id, this.selectedUser).then(() => {
+        console.log('Usuario actualizado exitosamente');
+        // Actualizar la lista de usuarios o realizar alguna acción adicional si es necesario
+      }).catch(error => {
+        console.error('Error al actualizar el usuario', error);
+      });
+    }
+  }
 
 
-  constructor(private api: ApiService, 
-              private afAuth: AngularFireAuth,
-              private toastController: ToastController,
-              private storage: AngularFireStorage ) { }
-
-  ngOnInit() {
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        // El usuario ha iniciado sesión en Firebase
-        this.userData = user;
-        this.userEmail = user.email; // Obtenemos el correo del usuario autenticado
-
-        // Llama a la API para obtener todos los usuarios y luego filtra el usuario por correo
-        this.api.getUser().subscribe((response) => {
-          this.data = response;
-          this.datos = this.data.users;
-
-          const usuarioEncontrado = this.datos.find(usuario => {
-            return usuario.email === this.userEmail;
-          });
-
-          if (usuarioEncontrado) {
-            this.apiUserData = usuarioEncontrado;
-            console.log(this.apiUserData)
-          } else {
-            console.log('error');
-          }
+  deleteUserFromFirebase(): void {
+    if (this.selectedUser) {
+      this.userFirestoreService.deleteUser(this.selectedUser.id)
+        .then(() => {
+          console.log('Usuario eliminado  Firestore');
+          this.selectedUser = null; // Limpiar el usuario seleccionado después de eliminarlo
+        })
+        .catch(error => {
+          console.error('Error al eliminar el usuario', error);
         });
-      } else {
-        // El usuario no ha iniciado sesión
-        this.userData = null;
-      }
-    });
+    }
   }
-
-
-  async actualizarCampo(campo: string) {
-    const toast = await this.toastController.create({
-      message: `¿Deseas actualizar el campo ${campo}?`,
-      buttons: [
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-        },
-        {
-          text: 'Actualizar',
-          handler: () => {
-            this.confirmarActualizacion(campo);
-          },
-        },
-      ],
-    });
-
-    await toast.present();
-  }
-
-  confirmarActualizacion(campo: string) {
-    const userId = this.apiUserData.id;
-    const nuevoValor = this.apiUserData[campo];
-
-    this.api.updateUserField(userId, campo, nuevoValor).subscribe(response => {
-      if (response.success) {
-        // Manejar la respuesta o mostrar una notificación de éxito
-        console.log(`Campo ${campo} actualizado con éxito`);
-        // Actualizar el campo en el objeto local
-        this.apiUserData[campo] = nuevoValor;
-      } else {
-        // Manejar la respuesta en caso de error
-        console.error(response.error);
-      }
-    });
-
-  }
+  
   
 }
