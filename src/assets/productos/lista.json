@@ -1,0 +1,25 @@
+{
+    "data": [
+    {
+       "name": "Plan Inicial",
+       "state": "9 seciones",
+       "description": " 9 seciones  ",
+       "image": "mancuernas.jpg",
+       "valor": 0.01
+    },
+    {
+        "name": "Plan Medio",
+        "state": "12 seciones",
+        "description": "12 seciones ",
+        "image": "rusa.jpg",
+        "valor":  0.02
+     },
+     {
+        "name": "plan Full",
+        "state": "30 seciones",
+        "description": " 30 seciones ",
+        "image": "pesa.jpg",
+        "valor": 0.03
+     }
+]
+}

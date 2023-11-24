@@ -1,0 +1,59 @@
+<ion-content [fullscreen]="true" >
+<div class="image">
+
+
+  <div class="d-flex-center">
+    <form [formGroup]="form" class="auth-form" (ngSubmit)="submit()" (keypress.enter)="submit()" >
+      <div >
+        <h1>
+          <b>
+            <i>
+              Admin Energy vibes
+            </i>   
+          </b>
+        </h1>
+      </div>
+      <div class="image">
+        <img src="assets/icon/Energy2.png" alt="Logo de la aplicación" height="100">
+      </div>
+      
+      
+        <app-custom-input 
+      icon="mail-sharp" 
+      autocomplete="email" 
+      [control]="form.controls.email" 
+      type="email"
+      label="Correo"></app-custom-input>
+      
+      <div class="validators" *ngIf="form.controls.email.errors && form.controls.email.touched">
+
+        <div *ngIf="form.controls.email.errors?.['required']">Ingrese su correo</div>
+        <div *ngIf="form.controls.email.errors?.['email']">Ingrese un correo electronico valido</div>
+      
+      </div>
+  
+      <app-custom-input 
+      icon="lock-closed-sharp"
+      autocomplete="password" 
+      [control]="form.controls.password" 
+      type="password" 
+      label="Contraseña"></app-custom-input>
+
+      <div class="validators" *ngIf="form.controls.password.errors && form.controls.password.touched">
+
+        <div *ngIf="form.controls.password.errors?.['required']">Ingrese su contraseña</div>
+      
+      </div>
+
+      <h6 routerLink="/forgot-pass">¿Olvidaste tu contraseña?</h6>
+
+      <ion-button  class="submit" expand="block"  node="ios" type="submit" [disabled]="form.invalid">
+        Ingresar
+      </ion-button>      
+      
+    </form>
+  </div>
+</div>
+  
+</ion-content>
+

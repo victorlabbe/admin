@@ -1,0 +1,57 @@
+
+
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar color="mycolor">
+      <ion-buttons slot="end">
+        <ion-button [routerLink]="['/login']" (click)="signOut()"><ion-icon  name="log-in"></ion-icon> </ion-button>
+      </ion-buttons>
+      <ion-title class="bienvenidos" ><i>Administracion Energy vibes</i></ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    
+    <div class="image">
+    <div class="">
+    
+    <ion-grid  >
+    
+      <ion-row>
+        <ion-col>
+          <div id="container2">
+            <button ion-button [routerLink]="['/perfil']" class="btn">
+              <ion-icon name="person-outline"></ion-icon><br> Usuarios</button>
+          </div>
+        </ion-col>
+     
+        
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <div id="container2">
+            <button ion-button [routerLink]="['/dietas']" class="btn">
+              <ion-icon slot="start" name="fast-food"></ion-icon> <br>Dietas</button>
+          </div>
+        </ion-col>
+      
+      </ion-row>
+      <ion-row>
+        
+        <ion-col>
+          <div id="container2">
+            <button ion-button [routerLink]="['/gym']" class="btn">
+              <ion-icon slot="start" name="people"></ion-icon> <br>Gimnasios</button>
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+       
+      
+      </ion-row>
+    </ion-grid>
+  </div>
+  </div>
+  </ion-content>
+  
+</div>

@@ -1,0 +1,24 @@
+.image{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    letter-spacing: 5px;
+    font-size: 3rem;
+    background-position: center;
+    background-size: cover;
+    
+}
+.custom-content {
+    /* Ajusta el tamaño y las propiedades según tus necesidades */
+    min-height: 100vh; /* Ajusta la altura mínima según tu diseño */
+  }
+  .imaCenter{
+    text-align: center;
+    position: relative;
+  }
+  .title{
+    text-align: center;
+}
