@@ -128,6 +128,13 @@ ion-button {
     .add-update-modal {
         --height: 680px;
     }
-
+/* CSS para simular un cursor predeterminado en un entorno de escritorio */
+@media (min-width: 768px) { /* Media query para dispositivos de escritorio (ajusta el ancho según necesites) */
+    /* Selecciona el elemento que simula un clic en dispositivos móviles */
+    .ion-item {
+      cursor: pointer; /* Cambia el cursor a una mano o pointer */
+    }
+  }
+  
     
 }

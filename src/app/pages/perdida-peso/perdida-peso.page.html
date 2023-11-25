@@ -4,13 +4,143 @@
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/dietas"></ion-back-button>
       </ion-buttons>
-      <ion-title class="centrar">perdida de peso</ion-title>
+      <ion-title class="centrar">Perdida de peso</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <ion-content class="ion-padding">
-
  
+  <ion-content class="ion-padding">
+    <!-- Lista de dietas Perdida de peso -->
+    <ion-list lines="full">
+      <ion-item *ngFor="let dietPerd of dietsPerd" (click)="selectDietPerd(dietPerd)" [class.selected]="selectedDietPerd === dietPerd">
+        <ion-label>Dieta Perdida de peso opcion: {{ dietPerd.id }}</ion-label>
+      </ion-item>
+    </ion-list>
+    
+    <!-- Detalles del dieta Perdida de peso seleccionado -->
+    <ion-card *ngIf="showDetail" class="dietPerd-details">
+      <ion-card-header>
+        <ion-card-title>Detalles de la dieta Perdida de peso seleccionada</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+  
+        <ion-item>
+          <ion-label position="floating">Nombre del desayuno:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.nombreDesayuno"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Descripción desayuno:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.descripcionDesayuno"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Nombre Almuerzo:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.nombreAlmuerzo"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Descripción del Almuerzo:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.descripcionAlmuerzo"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la merienda de tarde:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.nombreMeriendaTarde"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripción de la merienda de tarde:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.descripcionMeriendatarde"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la cena:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.nombreCena"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripción de la cena:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.descripcionCena"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la merienda nocturna:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.nombreMeriendaNocturna"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripcion de la merienda nocturna:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.descripcionMeriendaNocturna"></ion-input>
+        </ion-item>
+  
+        <!-- Agrega más campos según la estructura de tu gimnasio -->
+  
+        <ion-button expand="full" (click)="updateDietPerd()">Guardar cambios</ion-button>
+        <ion-button expand="full" color="danger" (click)="deleteDietPerd(selectedDietPerd.id)">Eliminar dieta Perdida de peso</ion-button>
+      </ion-card-content>
+    </ion-card>
+    <!-- Formulario para crear un nuevo gimnasio -->
+    <ion-card class="create-dietPerd-form" *ngIf="showCreateForm">
+      <ion-card-header>
+        <ion-card-title>Crear nueva dieta Perdida de peso</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+  
+        <ion-item>
+          <ion-label position="floating">Nombre del desayuno:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.nombreDesayuno"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Descripción desayuno:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.descripcionDesayuno"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Nombre Almuerzo:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.nombreAlmuerzo"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Descripción del Almuerzo:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.descripcionAlmuerzo"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la merienda de tarde:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.nombreMeriendaTarde"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripción de la merienda de tarde:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.descripcionMeriendatarde"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la cena:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.nombreCena"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripción de la cena:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.descripcionCena"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la merienda nocturna:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.nombreMeriendaNocturna"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripcion de la merienda nocturna:</ion-label>
+          <ion-input [(ngModel)]="selectedDietPerd.descripcionMeriendaNocturna"></ion-input>
+        </ion-item>
+        <!-- Agrega más campos según la estructura de la nueva dieta Perdida de peso -->
+  
+        <ion-button expand="full" (click)="createDietPerd()">Crear dieta Perdida de peso</ion-button>
+      </ion-card-content>
+    </ion-card>
+    <ion-button expand="full" (click)="showcreateDietPerdForm()">Crear nueva dieta Perdida de peso</ion-button>
 
 
   </ion-content>

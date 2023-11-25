@@ -13,6 +13,21 @@ export class GymFirestoreService {
     this.gymsCollection = this.firestore.collection('gimnasios');
   }
 
+  async getNextAvailableID(): Promise<string> {
+    let newId = 1;
+
+    while (true) {
+      const resRef = this.firestore.collection('gimnasios').doc(`${newId}`);
+      const resDoc = await resRef.get().toPromise();
+
+      if (!resDoc.exists) {
+        return `${newId}`;
+      }
+
+      newId++;
+    }
+  }
+
   getGyms(): Observable<any[]> {
     return this.gymsCollection.valueChanges({ idField: 'id' });
   }
@@ -21,8 +36,9 @@ export class GymFirestoreService {
     return this.gymsCollection.doc(gymId).valueChanges({ idField: 'id' });
   }
 
-  createGym(gymData: any): Promise<any> {
-    return this.gymsCollection.add(gymData);
+  createGym(newGym: any, desiredId: string) {
+    // Usa el ID deseado para crear el documento en Firestore
+    return this.firestore.collection('gimnasios').doc(desiredId).set(newGym);
   }
 
   updateGym(gymId: string, newData: any): Promise<void> {

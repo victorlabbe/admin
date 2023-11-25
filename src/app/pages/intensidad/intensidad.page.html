@@ -2,15 +2,147 @@
   <ion-header>
     <ion-toolbar color="mycolor">
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="/main"></ion-back-button>
+        <ion-back-button defaultHref="/dietas"></ion-back-button>
       </ion-buttons>
-      <ion-title class="centrar">Alta intensidad</ion-title>
+      <ion-title class="centrar">Alta Intensidad</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content class="ion-padding">
-
+    <!-- Lista de dietas Intensidades -->
+    <ion-list lines="full">
+      <ion-item *ngFor="let dietInt of dietsInt" (click)="selectDietInt(dietInt)" [class.selected]="selectedDietInt === dietInt">
+        <ion-label>Dieta alta Intensidad opcion: {{ dietInt.id }}</ion-label>
+      </ion-item>
+    </ion-list>
     
+    <!-- Detalles del dieta Intensidad seleccionado -->
+    <ion-card *ngIf="showDetail" class="dietInt-details">
+      <ion-card-header>
+        <ion-card-title>Detalles de la dieta alta Intensidad seleccionada</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+  
+        <ion-item>
+          <ion-label position="floating">Nombre del desayuno:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.nombreDesayuno"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Descripción desayuno:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.descripcionDesayuno"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Nombre Almuerzo:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.nombreAlmuerzo"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Descripción del Almuerzo:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.descripcionAlmuerzo"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la merienda de tarde:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.nombreMeriendaTarde"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripción de la merienda de tarde:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.descripcionMeriendatarde"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la cena:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.nombreCena"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripción de la cena:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.descripcionCena"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la merienda nocturna:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.nombreMeriendaNocturna"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripcion de la merienda nocturna:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.descripcionMeriendaNocturna"></ion-input>
+        </ion-item>
+  
+        <!-- Agrega más campos según la estructura de tu gimnasio -->
+  
+        <ion-button expand="full" (click)="updateDietInt()">Guardar cambios</ion-button>
+        <ion-button expand="full" color="danger" (click)="deleteDietInt(selectedDietInt.id)">Eliminar dieta Intensidad</ion-button>
+      </ion-card-content>
+    </ion-card>
+    <!-- Formulario para crear un nuevo gimnasio -->
+    <ion-card class="create-dietInt-form" *ngIf="showCreateForm">
+      <ion-card-header>
+        <ion-card-title>Crear nueva dieta alta intensidad</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+  
+        <ion-item>
+          <ion-label position="floating">Nombre del desayuno:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.nombreDesayuno"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Descripción desayuno:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.descripcionDesayuno"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Nombre Almuerzo:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.nombreAlmuerzo"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Descripción del Almuerzo:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.descripcionAlmuerzo"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la merienda de tarde:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.nombreMeriendaTarde"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripción de la merienda de tarde:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.descripcionMeriendatarde"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la cena:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.nombreCena"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripción de la cena:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.descripcionCena"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la merienda nocturna:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.nombreMeriendaNocturna"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripcion de la merienda nocturna:</ion-label>
+          <ion-input [(ngModel)]="selectedDietInt.descripcionMeriendaNocturna"></ion-input>
+        </ion-item>
+        <!-- Agrega más campos según la estructura de la nueva dieta Intensidad -->
+  
+        <ion-button expand="full" (click)="createDietInt()">Crear dieta alta Intensidad</ion-button>
+      </ion-card-content>
+    </ion-card>
+    <ion-button expand="full" (click)="showcreateDietIntForm()">Crear nueva dieta alta Intensidad</ion-button>
+
+
   </ion-content>
   
 

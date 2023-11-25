@@ -15,6 +15,7 @@ export class GymPage implements OnInit {
   showDetail: boolean = false;
   showCreateForm: boolean = false;
   showCreateButton: boolean = true;
+  nextId: string;
 
   constructor(
     private gymService: GymFirestoreService,
@@ -84,7 +85,16 @@ export class GymPage implements OnInit {
   async createGym() {
     if (this.newGym.nombre && this.newGym.direccion && this.newGym.horario && this.newGym.latitud && this.newGym.longitud) {
       try {
-        await this.gymService.createGym(this.newGym);
+        this.nextId = await this.gymService.getNextAvailableID();
+        this.newGym= {
+          id:this.nextId,
+          nombre: this.newGym.nombre,
+          direccion: this.newGym.direccion,
+          horario: this.newGym.horario,
+          latitud: this.newGym.latitud,
+          longitud: this.newGym.longitud
+        };
+        await this.gymService.createGym(this.newGym, this.nextId);
         this.newGym = {};
         this.getGyms();
         this.showCreateButton = true; // Mostrar el botón después de crear el gimnasio

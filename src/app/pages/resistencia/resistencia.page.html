@@ -4,13 +4,143 @@
       <ion-buttons slot="start">
         <ion-back-button defaultHref="/dietas"></ion-back-button>
       </ion-buttons>
-      <ion-title class="centrar">Resistencia</ion-title>
+      <ion-title class="centrar">resistencia </ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <ion-content class="ion-padding">
-
  
+  <ion-content class="ion-padding">
+    <!-- Lista de dietas resistencia de  -->
+    <ion-list lines="full">
+      <ion-item *ngFor="let dietRes of dietsRes" (click)="selectDietRes(dietRes)" [class.selected]="selectedDietRes === dietRes">
+        <ion-label>Dieta resistencia opcion: {{ dietRes.id }}</ion-label>
+      </ion-item>
+    </ion-list>
+    
+    <!-- Detalles del dieta resistencia de  seleccionado -->
+    <ion-card *ngIf="showDetail" class="dietRes-details">
+      <ion-card-header>
+        <ion-card-title>Detalles de la dieta resistencia seleccionada</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+  
+        <ion-item>
+          <ion-label position="floating">Nombre del desayuno:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.nombreDesayuno"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label position="floating">Descripción desayuno:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.descripcionDesayuno"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Nombre Almuerzo:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.nombreAlmuerzo"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Descripción del Almuerzo:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.descripcionAlmuerzo"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la merienda de tarde:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.nombreMeriendaTarde"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripción de la merienda de tarde:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.descripcionMeriendatarde"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la cena:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.nombreCena"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripción de la cena:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.descripcionCena"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la merienda nocturna:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.nombreMeriendaNocturna"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripcion de la merienda nocturna:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.descripcionMeriendaNocturna"></ion-input>
+        </ion-item>
+  
+  
+        <ion-button expand="full" (click)="updateDietRes()">Guardar cambios</ion-button>
+        <ion-button expand="full" color="danger" (click)="deleteDietRes(selectedDietRes.id)">Eliminar dieta resistencia de </ion-button>
+      </ion-card-content>
+    </ion-card>
+    <!-- Formulario para crear un nuevo dieta -->
+    <ion-card class="create-dietRes-form" *ngIf="showCreateForm">
+      <ion-card-header>
+        <ion-card-title>Crear nueva dieta resistencia de </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+  
+        <ion-item>
+          <ion-label position="floating">Nombre del desayuno:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.nombreDesayuno"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Descripción desayuno:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.descripcionDesayuno"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Nombre Almuerzo:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.nombreAlmuerzo"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label position="floating">Descripción del Almuerzo:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.descripcionAlmuerzo"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la merienda de tarde:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.nombreMeriendaTarde"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripción de la merienda de tarde:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.descripcionMeriendatarde"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la cena:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.nombreCena"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripción de la cena:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.descripcionCena"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Nombre de la merienda nocturna:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.nombreMeriendaNocturna"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Descripcion de la merienda nocturna:</ion-label>
+          <ion-input [(ngModel)]="selectedDietRes.descripcionMeriendaNocturna"></ion-input>
+        </ion-item>
+        <!-- Agrega más campos según la estructura de la nueva dieta resistencia de  -->
+  
+        <ion-button expand="full" (click)="createDietRes()">Crear dieta resistencia </ion-button>
+      </ion-card-content>
+    </ion-card>
+    <ion-button expand="full" (click)="showcreateDietResForm()">Crear nueva dieta resistencia </ion-button>
+
 
   </ion-content>
   
