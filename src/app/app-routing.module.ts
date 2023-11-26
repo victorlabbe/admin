@@ -52,6 +52,14 @@ const routes: Routes = [
     path: 'perdida-peso',
     loadChildren: () => import('./pages/perdida-peso/perdida-peso.module').then( m => m.PerdidaPesoPageModule)
   },
+  {
+    path: 'checkin',
+    loadChildren: () => import('./pages/checkin/checkin.module').then( m => m.CheckinPageModule)
+  },
+  {
+    path: 'reservas',
+    loadChildren: () => import('./pages/reservas/reservas.module').then( m => m.ReservasPageModule)
+  },
 
 
 

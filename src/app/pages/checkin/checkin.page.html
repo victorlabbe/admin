@@ -1,0 +1,43 @@
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/main"></ion-back-button>
+      </ion-buttons>
+      <ion-title class="centrar">check-in</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="centrar2">
+    <i>
+      <h2>
+        Muestra esta pantalla al  administrador del Gimnasio
+      </h2>
+      
+    </i>
+  </div>
+  <div class="image">
+   
+    <ion-title class="centrar">Reservas realizadas </ion-title>
+    
+    <ion-card class="cardTransp">
+      <ion-list>
+      <ion-item *ngFor="let reserva of reservas">
+        <!-- Muestra los detalles de la reserva -->
+        
+        <ion-label >
+          Usuario: {{ reserva.usuario }} <br>
+          Gimnasio: {{ reserva.nombreGym }} <br>
+          Fecha: {{ reserva.fechaAgendada }} <br>
+          Hora: {{ reserva.horaAgendada }} <br>
+          Direccion: {{ reserva.direccion }} <br>
+    
+        </ion-label>
+        <!-- Agrega aquí cualquier otro contenido relacionado con el check-in -->
+      </ion-item>
+    </ion-list>
+    </ion-card>
+    
+    </div>
+</ion-content>
