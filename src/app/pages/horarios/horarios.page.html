@@ -1,0 +1,84 @@
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/main"></ion-back-button>
+      </ion-buttons>
+      <ion-title class="centrar">Horarios creados</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content [fullscreen]="true">
+    <!-- Lista de Horarios -->
+    <ion-list lines="full">
+      <ion-item *ngFor="let hour of hours" (click)="selectHour(hour)" [class.selected]="selectedHour === hour">
+        <ion-label>{{ hour.fechasDisponibles }}</ion-label>
+      </ion-item>
+    </ion-list>
+
+    <!-- Detalles del Horarios seleccionado -->
+    <ion-card *ngIf="showDetail && selectedHour">
+      <ion-card-header>
+        <ion-card-title>Detalles del Horario seleccionado</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+
+        <ion-item>
+          <ion-label position="floating">Nombre:</ion-label>
+          <ion-input [(ngModel)]="selectedHour.fechasDisponibles"></ion-input>
+        </ion-item>
+
+        <!-- Lista dinámica de campos de hora para actualizar -->
+        <ion-list *ngIf="selectedHour.hora">
+          <ion-item *ngFor="let hora of selectedHour.hora; let i = index">
+            <ion-label position="floating">Hora {{ i + 1 }}:</ion-label>
+            <ion-input [(ngModel)]="selectedHour.hora[i]"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Agregar Hora:</ion-label>
+            <ion-input #newHourInput aria-label="Agregar Hora"></ion-input>
+            <ion-button (click)="addHourNew(newHourInput.value.toString())">Agregar</ion-button>
+          </ion-item>
+        </ion-list>
+
+        <!-- Agrega más campos según sea necesario -->
+
+        <ion-button expand="full" (click)="updateHour()">Guardar cambios</ion-button>
+        <ion-button expand="full" color="danger" (click)="deleteHour(selectedHour.id.toString())">Eliminar Horarios</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Formulario para crear un nuevo Horarios -->
+    <ion-card class="create-hour-form" *ngIf="showCreateForm">
+      <ion-card-header>
+        <ion-card-title>Crear nuevos horarios</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+
+        <ion-item>
+          <ion-label position="floating">Fecha:</ion-label>
+          <ion-input [(ngModel)]="newHour.fechasDisponibles"></ion-input>
+        </ion-item>
+
+        <!-- Lista dinámica de campos de hora para crear -->
+        <ion-list>
+          <ion-item *ngFor="let hora of newHour.hora; let i = index">
+            <ion-label position="floating">Hora {{ i + 1 }}:</ion-label>
+            <ion-input [(ngModel)]="newHour.hora[i]"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Agregar Hora:</ion-label>
+            <ion-input #newHourInputCreate aria-label="Agregar Hora"></ion-input>
+            <ion-button (click)="addHourNew(newHourInputCreate.value.toString())">Agregar</ion-button>
+          </ion-item>
+          
+        </ion-list>
+
+        <!-- Agrega más campos según la estructura de tu Horarios -->
+
+        <ion-button expand="full" (click)="createHour()">Crear nuevos horarios</ion-button>
+      </ion-card-content>
+    </ion-card>
+    <ion-button expand="full" (click)="showCreateHourForm()">Crear nuevo horario</ion-button>
+  </ion-content>
+</div>
